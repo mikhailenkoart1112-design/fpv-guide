@@ -9,18 +9,40 @@ type Props = {
 };
 
 const responses: Record<string, string> = {
-  "check drone": "DRONE CHECK: motors online, receiver linked, video signal stable.",
-  "scan battery": "BATTERY SCAN: voltage nominal. Do not fly below safe level.",
-  "flight tips": "TIP: smooth sticks win. Fly slow first, speed comes later.",
-  "random trick": "TRICK: try a slow split-s over open space.",
-  "system status": "SYSTEM STATUS: FPV GUIDE OS running. Signal encrypted.",
+  help: "COMMANDS: check drone / scan battery / flight tips / random trick / system status / emergency / bind elrs / video fix / clear",
+
+  "check drone":
+    "DRONE CHECK: props removed, FC online, receiver linked, motors ready. Check props, battery, antennas and failsafe before flight.",
+
+  "scan battery":
+    "BATTERY SCAN: check cell voltage, balance connector and damage. Do not fly puffed or damaged LiPo batteries.",
+
+  "flight tips":
+    "TIP: fly low and slow first. Smooth sticks are more important than speed. Practice turns, throttle control and emergency disarm.",
+
+  "random trick":
+    "TRICK: try a slow split-s. Gain altitude, half roll inverted, then pull through smoothly.",
+
+  "system status":
+    "SYSTEM STATUS: FPV GUIDE OS ONLINE. ELRS LINK SIMULATED. VTX CHANNEL STABLE. PILOT MODE ACTIVE.",
+
+  emergency:
+    "EMERGENCY CHECKLIST: DISARM → locate drone → disconnect battery → check LiPo damage → inspect props and motors → do not re-arm until safe.",
+
+  "bind elrs":
+    "ELRS BIND: use the same bind phrase on radio and receiver. Check ELRS version, reboot both devices, then test receiver movement in Betaflight.",
+
+  "video fix":
+    "VIDEO FIX: check antenna, VTX power, goggles channel, camera cable and VTX table. Never power VTX long without antenna.",
+
+  clear: "CLEAR",
 };
 
 export default function PilotTerminal({ open, onClose }: Props) {
   const [command, setCommand] = useState("");
   const [history, setHistory] = useState<string[]>([
     "PILOT TERMINAL ONLINE",
-    "Type: check drone / scan battery / flight tips / random trick / system status",
+    "Type help to show commands.",
   ]);
 
   if (!open) return null;
@@ -29,12 +51,15 @@ export default function PilotTerminal({ open, onClose }: Props) {
     const key = command.trim().toLowerCase();
     if (!key) return;
 
-    setHistory((prev) => [
-      ...prev,
-      `> ${command}`,
-      responses[key] || "UNKNOWN COMMAND. Try: system status",
-    ]);
+    const response = responses[key] || "UNKNOWN COMMAND. Type help.";
 
+    if (response === "CLEAR") {
+      setHistory(["PILOT TERMINAL ONLINE", "Type help to show commands."]);
+      setCommand("");
+      return;
+    }
+
+    setHistory((prev) => [...prev, `> ${command}`, response]);
     setCommand("");
   }
 
@@ -60,6 +85,7 @@ export default function PilotTerminal({ open, onClose }: Props) {
 
         <div className="mt-6 flex gap-3 border-t border-[#00FF9D]/20 pt-4">
           <span className="font-mono">&gt;</span>
+
           <input
             value={command}
             onChange={(e) => setCommand(e.target.value)}

@@ -143,3 +143,31 @@ body {
     opacity: 0.9;
   }
 }
+.drone-float {
+  animation: droneFloat 4s ease-in-out infinite;
+}
+
+.prop-spin {
+  animation: propSpin 0.45s linear infinite;
+}
+
+@keyframes droneFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+@keyframes propSpin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

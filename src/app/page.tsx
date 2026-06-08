@@ -5,7 +5,8 @@ import BinaryBackground from "@/components/BinaryBackground";
 import BinaryDrone from "@/components/BinaryDrone";
 import { useState } from "react";
 import PilotTerminal from "@/components/PilotTerminal";
-import Header from "@/components/Header";
+import FooterRating from "@/components/FooterRating";
+
 import Link from "next/link";
 
 const text = {
@@ -30,7 +31,7 @@ const text = {
 };
 
 export default function Home() {
-  const { language, toggleLanguage } = useLanguage();
+  const { language} = useLanguage();
   const t = text[language];
   const [terminalOpen, setTerminalOpen] = useState(false);
 
@@ -38,14 +39,11 @@ export default function Home() {
     <main className="min-h-screen bg-[#050505] text-white">
       <BinaryBackground />
       <BinaryDrone />
+      
       <PilotTerminal open={terminalOpen} onClose={() => setTerminalOpen(false)} />
-        <Header />
-      <button
-        onClick={toggleLanguage}
-        className="fixed right-30 top-7.5 z-50 rounded-full border border-[#00FF9D]/40 bg-black/60 px-5 py-3 text-sm font-bold text-[#00FF9D] backdrop-blur-xl"
-      >
-        {t.lang}
-      </button>
+        
+      
+
 
       <section className="relative z-20 flex min-h-screen items-center justify-center px-6 pt-72">
         <div className="text-center">
@@ -95,6 +93,7 @@ export default function Home() {
 
         </div>
       </section>
+      <FooterRating />
     </main>
   );
 }

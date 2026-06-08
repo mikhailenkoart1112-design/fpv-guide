@@ -3,6 +3,7 @@
 import { useState } from "react";
 import PageTopBar from "@/components/PageTopBar";
 import { useLanguage } from "@/components/LanguageProvider";
+import PageIntro from "@/components/PageIntro";
 
 const text = {
   en: {
@@ -115,6 +116,7 @@ export default function RepairPage() {
   return (
     <main className="min-h-screen bg-[#050505] px-6 pt-32 text-white">
       <div className="mx-auto max-w-6xl">
+        <PageIntro type="repair" />
         <PageTopBar />
 
         <p className="mb-4 text-sm uppercase tracking-[0.5em] text-[#00FF9D]">

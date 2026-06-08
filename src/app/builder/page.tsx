@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import PageTopBar from "@/components/PageTopBar";
 import { useLanguage } from "@/components/LanguageProvider";
+import PageIntro from "@/components/PageIntro";
 
 const text = {
   en: {
@@ -59,7 +60,7 @@ const labels = {
 };
 
 const options = {
-  budget: ["$200", "$500", "$1000", "$1500+"],
+  budget: ["$500", "$1000", "$1500+"],
   video: ["Analog", "Digital"],
   style: ["Freestyle", "Cinematic", "Racing"],
   size: ["TinyWhoop", "5 Inch"],
@@ -78,7 +79,7 @@ export default function BuilderPage() {
   const setup = useMemo(() => {
   const isUa = language === "ua";
 
-  if (budget === "$200") {
+  if (budget === "$500") {
     return {
       drone: size === "TinyWhoop" ? "Mobula6 / Meteor65 Analog" : "Б/у analog 5 inch або бюджетний kit",
       radio: "RadioMaster Pocket ELRS",
@@ -176,6 +177,7 @@ export default function BuilderPage() {
 
   return (
     <main className="min-h-screen bg-[#050505] px-6 pt-32 text-white">
+        <PageIntro type="builder" />
       <div className="mx-auto max-w-6xl">
         <PageTopBar />
 

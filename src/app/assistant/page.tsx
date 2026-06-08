@@ -4,6 +4,7 @@ import { useState } from "react";
 import PageTopBar from "@/components/PageTopBar";
 import { useLanguage } from "@/components/LanguageProvider";
 import { fpvKnowledge } from "@/data/fpvKnowledge";
+import PageIntro from "@/components/PageIntro";
 
 const text = {
   en: {
@@ -60,6 +61,7 @@ export default function AssistantPage() {
 
   return (
     <main className="min-h-screen bg-[#050505] px-6 pt-32 text-white">
+        <PageIntro type="assistant" />
       <div className="mx-auto max-w-5xl">
         <PageTopBar />
 
