@@ -1,22 +1,26 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
+
 import PageTopBar from "@/components/PageTopBar";
-import { useLanguage } from "@/components/LanguageProvider";
 import PageIntro from "@/components/PageIntro";
+import { useLanguage } from "@/components/LanguageProvider";
 
 const text = {
   en: {
     system: "FPV SIMULATOR HUB",
     title: "FPV Simulators",
-    subtitle: "Click a simulator to see description, minimum requirements and best use.",
+    subtitle:
+      "Click a simulator to see description, minimum requirements and best use.",
     requirements: "Minimum requirements",
     bestFor: "Best for",
   },
   ua: {
     system: "FPV СИМУЛЯТОРИ",
     title: "FPV Симулятори",
-    subtitle: "Натисни на симулятор, щоб побачити опис, мінімальні вимоги та для чого він підходить.",
+    subtitle:
+      "Натисни на симулятор, щоб побачити опис, мінімальні вимоги та для чого він підходить.",
     requirements: "Мінімальні вимоги",
     bestFor: "Для чого підходить",
   },
@@ -26,40 +30,52 @@ const simulators = {
   en: [
     {
       name: "FPV SkyDive",
-      description: "Free and lightweight FPV simulator. Great for complete beginners and weak laptops.",
-      requirements: "CPU: Intel i3 / Ryzen 3, RAM: 4 GB, GPU: integrated or low-end dedicated GPU.",
+      description:
+        "Free and lightweight FPV simulator. Great for complete beginners and weak laptops.",
+      requirements:
+        "CPU: Intel i3 / Ryzen 3, RAM: 4 GB, GPU: integrated or low-end dedicated GPU.",
       bestFor: "First flights, basic stick control, cheap training.",
     },
     {
       name: "Liftoff",
-      description: "Popular FPV simulator with freestyle maps, realistic feel and many drone presets.",
-      requirements: "CPU: Intel i5 / Ryzen 5, RAM: 8 GB, GPU: GTX 960 / similar or better.",
+      description:
+        "Popular FPV simulator with freestyle maps, realistic feel and many drone presets.",
+      requirements:
+        "CPU: Intel i5 / Ryzen 5, RAM: 8 GB, GPU: GTX 960 / similar or better.",
       bestFor: "Freestyle, outdoor practice, learning real FPV control.",
     },
     {
       name: "VelociDrone",
-      description: "Very good simulator for racing, gates, tracks and precise stick control.",
-      requirements: "CPU: Intel i5 / Ryzen 5, RAM: 8 GB, GPU: GTX 1050 / similar or better.",
+      description:
+        "Very good simulator for racing, gates, tracks and precise stick control.",
+      requirements:
+        "CPU: Intel i5 / Ryzen 5, RAM: 8 GB, GPU: GTX 1050 / similar or better.",
       bestFor: "Racing, precision, fast reactions.",
     },
   ],
   ua: [
     {
       name: "FPV SkyDive",
-      description: "Безкоштовний і легкий FPV симулятор. Добре підходить для новачків і слабких ноутбуків.",
-      requirements: "CPU: Intel i3 / Ryzen 3, RAM: 4 GB, GPU: вбудована або слабка дискретна відеокарта.",
+      description:
+        "Безкоштовний і легкий FPV симулятор. Добре підходить для новачків і слабких ноутбуків.",
+      requirements:
+        "CPU: Intel i3 / Ryzen 3, RAM: 4 GB, GPU: вбудована або слабка дискретна відеокарта.",
       bestFor: "Перші польоти, базове керування стіками, дешеве тренування.",
     },
     {
       name: "Liftoff",
-      description: "Популярний FPV симулятор з freestyle картами, реалістичним відчуттям і багатьма дронами.",
-      requirements: "CPU: Intel i5 / Ryzen 5, RAM: 8 GB, GPU: GTX 960 / схожа або краща.",
+      description:
+        "Популярний FPV симулятор з freestyle картами, реалістичним відчуттям і багатьма дронами.",
+      requirements:
+        "CPU: Intel i5 / Ryzen 5, RAM: 8 GB, GPU: GTX 960 / схожа або краща.",
       bestFor: "Freestyle, тренування на вулиці, навчання реальному FPV керуванню.",
     },
     {
       name: "VelociDrone",
-      description: "Дуже хороший симулятор для racing, воріт, трас і точного керування стіками.",
-      requirements: "CPU: Intel i5 / Ryzen 5, RAM: 8 GB, GPU: GTX 1050 / схожа або краща.",
+      description:
+        "Дуже хороший симулятор для racing, воріт, трас і точного керування стіками.",
+      requirements:
+        "CPU: Intel i5 / Ryzen 5, RAM: 8 GB, GPU: GTX 1050 / схожа або краща.",
       bestFor: "Гонки, точність, швидка реакція.",
     },
   ],
@@ -72,39 +88,91 @@ export default function SimulatorsPage() {
   const [active, setActive] = useState(list[0]);
 
   return (
-    <main className="min-h-screen bg-[#050505] px-6 pt-32 text-white">
-      <div className="mx-auto max-w-6xl">
+    <main className="relative min-h-screen overflow-hidden bg-[#050505] px-6 pt-32 text-white">
+      <PageIntro type="simulators" />
+
+      <motion.div
+        className="pointer-events-none absolute left-[-80px] top-36 z-0 text-5xl"
+        animate={{
+          x: ["0vw", "110vw"],
+          y: [0, -30, 20, -10, 0],
+          rotate: [0, 8, -6, 5, 0],
+        }}
+        transition={{
+          duration: 9,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      >
+        <span className="drop-shadow-[0_0_25px_#00FF9D]">🚁</span>
+      </motion.div>
+
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_70%_20%,rgba(0,255,157,0.12),transparent_32%)]" />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <PageTopBar />
-        <PageIntro type="simulators" />
-        <p className="mb-4 text-sm uppercase tracking-[0.5em] text-[#00FF9D]">
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15 }}
+          className="mb-4 text-sm uppercase tracking-[0.5em] text-[#00FF9D]"
+        >
           {t.system}
-        </p>
+        </motion.p>
 
-        <h1 className="text-5xl font-black md:text-7xl">{t.title}</h1>
+        <motion.h1
+          initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ delay: 0.25, duration: 0.5 }}
+          className="text-5xl font-black md:text-7xl"
+        >
+          {t.title}
+        </motion.h1>
 
-        <p className="mt-6 max-w-2xl text-lg text-white/60">{t.subtitle}</p>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="mt-6 max-w-2xl text-lg text-white/60"
+        >
+          {t.subtitle}
+        </motion.p>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_1.2fr]">
           <div className="grid gap-4">
-            {list.map((sim) => (
-              <button
+            {list.map((sim, index) => (
+              <motion.button
                 key={sim.name}
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.45 + index * 0.08 }}
+                whileHover={{ scale: 1.03, y: -6 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setActive(sim)}
                 className={`rounded-[28px] border p-6 text-left transition ${
                   active.name === sim.name
-                    ? "border-[#00FF9D] bg-[#00FF9D]/15 text-white"
+                    ? "border-[#00FF9D] bg-[#00FF9D]/15 text-white shadow-[0_0_45px_rgba(0,255,157,0.16)]"
                     : "border-[#00FF9D]/20 bg-[#00FF9D]/5 text-white/70 hover:bg-[#00FF9D]/10"
                 }`}
               >
                 <h2 className="text-2xl font-black text-[#00FF9D]">
                   {sim.name}
                 </h2>
-                <p className="mt-3 text-sm text-white/50">{sim.description}</p>
-              </button>
+                <p className="mt-3 text-sm text-white/50">
+                  {sim.description}
+                </p>
+              </motion.button>
             ))}
           </div>
 
-          <div className="rounded-[32px] border border-[#00FF9D]/30 bg-black/50 p-6 shadow-[0_0_80px_rgba(0,255,157,0.12)] backdrop-blur-xl">
+          <motion.div
+            key={active.name}
+            initial={{ opacity: 0, scale: 0.94, y: 35 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="rounded-[32px] border border-[#00FF9D]/30 bg-black/50 p-6 shadow-[0_0_80px_rgba(0,255,157,0.12)] backdrop-blur-xl"
+          >
             <h2 className="text-4xl font-black text-[#00FF9D]">
               {active.name}
             </h2>
@@ -112,21 +180,31 @@ export default function SimulatorsPage() {
             <p className="mt-5 text-lg text-white/70">{active.description}</p>
 
             <div className="mt-8 space-y-5">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+              >
                 <p className="text-sm font-bold uppercase tracking-[0.3em] text-[#00FF9D]">
                   {t.requirements}
                 </p>
                 <p className="mt-3 text-white/70">{active.requirements}</p>
-              </div>
+              </motion.div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.18 }}
+                className="rounded-2xl border border-white/10 bg-white/[0.03] p-5"
+              >
                 <p className="text-sm font-bold uppercase tracking-[0.3em] text-[#00FF9D]">
                   {t.bestFor}
                 </p>
                 <p className="mt-3 text-white/70">{active.bestFor}</p>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>
